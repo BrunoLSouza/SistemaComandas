@@ -17,6 +17,7 @@ namespace TCS.SistemaComanda.Dominio
         //public int Numero { get; set; }
         public bool Aberta { get; set; }
 
+        [ForeignKey("IdComanda")]
         public virtual List<ItemComanda> Itens { get; set; }
     }
 }

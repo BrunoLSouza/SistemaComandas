@@ -52,9 +52,8 @@ namespace TSC.SistemaComanda.API.Controllers
                 var retorno = comandaCore.ListarItens(idComanda);
                 return Request.CreateResponse(HttpStatusCode.OK,JsonConvert.SerializeObject(retorno));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ocorreu um erro no servidor");
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest, "Ocorreu um erro ao adicionar o produto na comanda");

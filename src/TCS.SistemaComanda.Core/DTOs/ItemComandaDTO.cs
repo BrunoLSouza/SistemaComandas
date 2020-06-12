@@ -10,7 +10,7 @@ namespace TCS.SistemaComanda.Core.DTOs
     {
         
         public Guid IdItemComanda { get; set; }
-        public ComandaDTO Comanda { get; set; }
+        public int IdComanda { get; set; }
         public ProdutoDTO Produto { get; set; }
         public int Quantidade { get; set; }
     }

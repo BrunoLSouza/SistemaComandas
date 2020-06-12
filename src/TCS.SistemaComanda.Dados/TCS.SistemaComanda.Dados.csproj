@@ -52,9 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexto\CtxSistemaComanda.cs" />
-    <Compile Include="Migrations\202006120125019_inicial.cs" />
-    <Compile Include="Migrations\202006120125019_inicial.designer.cs">
-      <DependentUpon>202006120125019_inicial.cs</DependentUpon>
+    <Compile Include="Migrations\202006121214415_Inicial.cs" />
+    <Compile Include="Migrations\202006121214415_Inicial.designer.cs">
+      <DependentUpon>202006121214415_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,8 +76,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006120125019_inicial.resx">
-      <DependentUpon>202006120125019_inicial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006121214415_Inicial.resx">
+      <DependentUpon>202006121214415_Inicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

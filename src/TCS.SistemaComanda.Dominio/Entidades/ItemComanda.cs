@@ -13,10 +13,8 @@ namespace TCS.SistemaComanda.Dominio
     {
         [Key]
         public Guid IdItemComanda { get; set; }
-
-        [ForeignKey("Comanda")]
+               
         public int IdComanda { get; set; }
-        public virtual Comanda Comanda { get; set; }
 
         [ForeignKey("Produto")]
         public int IdProduto { get; set; }

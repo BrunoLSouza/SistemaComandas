@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using TCS.SistemaComanda.Core.DTOs;
 using TCS.SistemaComanda.Dados.Repositorio;
 using TCS.SistemaComanda.Dominio;
 using TCS.SistemaComanda.Dominio.Interfaces.Repositorio;
@@ -66,12 +68,29 @@ namespace TCS.SistemaComanda.Core
 
         }
 
-        public List<ItemComanda> ListarItens(int idComanda)
+        public List<ItemComandaDTO> ListarItens(int idComanda)
         {
             if (idComanda > 0)
             {
-                List<ItemComanda> itens = _itemComandaData.Buscar(i => i.IdComanda == idComanda).ToList();
-                return itens;                
+                Comanda comanda = _comandaData.ObterPorId(idComanda);
+
+                if (comanda != null && comanda.Itens.Count > 0)
+                {
+                    List<ItemComandaDTO> itensDTO = new List<ItemComandaDTO>();
+
+                    foreach (var item in comanda.Itens)
+                    {
+                        var json = JsonConvert.SerializeObject(item);
+                        ItemComandaDTO jsonDTO = JsonConvert.DeserializeObject<ItemComandaDTO>(json);
+
+                        itensDTO.Add(jsonDTO);
+
+                    }
+
+                    
+
+                    return itensDTO;
+                }                           
 
             }
             

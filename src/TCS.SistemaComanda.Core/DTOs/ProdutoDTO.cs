@@ -9,5 +9,7 @@ namespace TCS.SistemaComanda.Core
     public class ProdutoDTO
     {
         public int IdProduto { get; set; }
+        public string Nome { get; set; }
+        public double Valor { get; set; }
     }
 }
