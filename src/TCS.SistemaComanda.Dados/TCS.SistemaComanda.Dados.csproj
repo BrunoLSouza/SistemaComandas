@@ -56,10 +56,23 @@
     <Compile Include="Migrations\202006121214415_Inicial.designer.cs">
       <DependentUpon>202006121214415_Inicial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006131558422_add_tab_NF_ItemNF.cs" />
+    <Compile Include="Migrations\202006131558422_add_tab_NF_ItemNF.designer.cs">
+      <DependentUpon>202006131558422_add_tab_NF_ItemNF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006131605197_add_tab_NF_ItemNF_2.cs" />
+    <Compile Include="Migrations\202006131605197_add_tab_NF_ItemNF_2.designer.cs">
+      <DependentUpon>202006131605197_add_tab_NF_ItemNF_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006131950188_add_Tab_AnotacoesFiscal.cs" />
+    <Compile Include="Migrations\202006131950188_add_Tab_AnotacoesFiscal.designer.cs">
+      <DependentUpon>202006131950188_add_Tab_AnotacoesFiscal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\ComandaRepositorio.cs" />
     <Compile Include="Repositorio\ItemComandaRepositorio.cs" />
+    <Compile Include="Repositorio\NotaFiscalRepositorio.cs" />
     <Compile Include="Repositorio\ProdutoRepositorio.cs" />
     <Compile Include="Repositorio\RepositorioBase.cs" />
     <Compile Include="Seeds\ComandaSeed.cs" />
@@ -78,6 +91,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202006121214415_Inicial.resx">
       <DependentUpon>202006121214415_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006131558422_add_tab_NF_ItemNF.resx">
+      <DependentUpon>202006131558422_add_tab_NF_ItemNF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006131605197_add_tab_NF_ItemNF_2.resx">
+      <DependentUpon>202006131605197_add_tab_NF_ItemNF_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006131950188_add_Tab_AnotacoesFiscal.resx">
+      <DependentUpon>202006131950188_add_Tab_AnotacoesFiscal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

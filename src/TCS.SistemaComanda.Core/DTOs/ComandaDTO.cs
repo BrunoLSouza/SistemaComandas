@@ -8,5 +8,7 @@ namespace TCS.SistemaComanda.Core.DTOs
 {
     public class ComandaDTO
     {
+        public int IdComanda { get; set; }
+        public bool Aberta { get; set; }
     }
 }

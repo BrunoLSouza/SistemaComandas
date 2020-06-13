@@ -25,15 +25,15 @@ namespace TCS.SistemaComanda.Core
 
         }
 
-        public List<Produto> ObterListaProduto(List<ProdutoDTO> listaProdutoDTO)
+        public List<Produto> ObterListaProduto(List<int> idProdutos)
         {
-            if (listaProdutoDTO != null && listaProdutoDTO.Count > 0)
+            if (idProdutos != null && idProdutos.Count > 0)
             {
                 List<Produto> listaProduto = new List<Produto>();
 
-                foreach (var produtoDto in listaProdutoDTO)
+                foreach (var id in idProdutos)
                 {
-                    Produto produto = ObterProduto(produtoDto.IdProduto);
+                    Produto produto = ObterProduto(id);
                     listaProduto.Add(produto);
                 }
 

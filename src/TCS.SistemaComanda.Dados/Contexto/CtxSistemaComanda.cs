@@ -20,6 +20,10 @@ namespace TCS.SistemaComanda.Dados.Contexto
         public DbSet<Comanda> Comandas { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<ItemComanda> ItensComanda { get; set; }
+        public DbSet<NotaFiscal> NotasFiscais { get; set; }
+        public DbSet<ItemNotaFiscal> ItensNotaFiscal { get; set; }
+        public DbSet<AnotacaoNotaFiscal> AnotacoesNotaFiscal { get; set; }
+        
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

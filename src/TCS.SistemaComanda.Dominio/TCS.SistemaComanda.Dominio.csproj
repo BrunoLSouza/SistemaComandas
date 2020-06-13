@@ -42,13 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\AnotacaoNotaFiscal.cs" />
     <Compile Include="Entidades\Comanda.cs" />
     <Compile Include="Entidades\ItemComanda.cs" />
+    <Compile Include="Entidades\NotaFiscal.cs" />
     <Compile Include="Entidades\Produto.cs" />
     <Compile Include="Interfaces\Repositorio\IComandaRepositorio.cs" />
     <Compile Include="Interfaces\Repositorio\IItemComandaRepositorio.cs" />
+    <Compile Include="Interfaces\Repositorio\INotaFiscalRepositorio.cs" />
     <Compile Include="Interfaces\Repositorio\IProdutoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorio\IRepositorioBase.cs" />
+    <Compile Include="ItemNotaFiscal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

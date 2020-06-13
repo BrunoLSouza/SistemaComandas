@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using TCS.SistemaComanda.Core;
+using TCS.SistemaComanda.Core.DTOs;
 
 namespace TSC.SistemaComanda.API.Controllers
 {
@@ -14,12 +15,12 @@ namespace TSC.SistemaComanda.API.Controllers
     {
         [HttpPost]
         [Route("Adicionar")]
-        public HttpResponseMessage AdicionarItem(int idComanda, [FromBody] List<ProdutoDTO> produtos)
+        public HttpResponseMessage AdicionarItem(int idComanda, [FromBody] List<int> idProdutos)
         {
             try
             {
                 ComandaCore comandaCore = new ComandaCore();
-                var retorno = comandaCore.InserirItens(idComanda, produtos);
+                var retorno = comandaCore.InserirItens(idComanda, idProdutos);
 
                 if (retorno == true)
                 {
@@ -37,9 +38,20 @@ namespace TSC.SistemaComanda.API.Controllers
 
         [HttpPost]
         [Route("Fechar")]
-        public string Fechar(int idComanda)
+        public HttpResponseMessage Fechar(int idComanda)
         {
-            return "Comanda Fechada";
+            try
+            {
+                ComandaCore comandaCore = new ComandaCore();
+                comandaCore.FecharComanda(idComanda);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Comanda Fechada");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ocorreu um erro no servidor");
+            }
+
         }
 
         [HttpGet]
@@ -61,9 +73,37 @@ namespace TSC.SistemaComanda.API.Controllers
 
         [HttpPost]
         [Route("Resetar")]
-        public string Resetar(int idProduto)
+        public HttpResponseMessage Resetar(int idComanda)
         {
-            return "Comanda Zerada";
+            try
+            {
+                ComandaCore comandaCore = new ComandaCore();
+                comandaCore.ResetarComanda(idComanda);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Comanda Resetada");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ocorreu um erro no servidor");
+            }
+
+        }
+
+        [HttpPost]
+        [Route("ObterTodas")]
+        public HttpResponseMessage ObterTodas()
+        {
+            try
+            {
+                ComandaCore comandaCore = new ComandaCore();
+                List<ComandaDTO> comandaDto = comandaCore.ObterTodasComandas();
+
+                return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(comandaDto));
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ocorreu um erro no servidor");
+            }
         }
 
     }

@@ -20,7 +20,5 @@ namespace TCS.SistemaComanda.Dominio
         public int IdProduto { get; set; }
         public virtual Produto Produto { get; set; }
 
-        public int Quantidade { get; set; }
-
     }
 }
