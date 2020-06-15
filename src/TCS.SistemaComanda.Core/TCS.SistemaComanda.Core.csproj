@@ -45,8 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComandaCore.cs" />
+    <Compile Include="DTOs\AnotacaoNotaFiscalDTO.cs" />
     <Compile Include="DTOs\ComandaDTO.cs" />
+    <Compile Include="DTOs\InserirProdutoDTO.cs" />
     <Compile Include="DTOs\ItemComandaDTO.cs" />
+    <Compile Include="DTOs\ItemNotaFiscalDTO.cs" />
+    <Compile Include="DTOs\NotaFiscalDTO.cs" />
     <Compile Include="DTOs\ProdutoDTO.cs" />
     <Compile Include="ProdutoCore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

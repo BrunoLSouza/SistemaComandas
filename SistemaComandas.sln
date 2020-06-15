@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCS.SistemaComanda.Dominio"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSC.SistemaComanda.API", "src\TSC.SistemaComanda.API\TSC.SistemaComanda.API.csproj", "{82DEFBCC-AF7E-444E-A691-4C876507B05A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSC.SistemaComanda.Web", "src\TSC.SistemaComanda.Web\TSC.SistemaComanda.Web.csproj", "{53519445-D835-4298-BC3C-ECAA3491B646}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{82DEFBCC-AF7E-444E-A691-4C876507B05A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82DEFBCC-AF7E-444E-A691-4C876507B05A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82DEFBCC-AF7E-444E-A691-4C876507B05A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53519445-D835-4298-BC3C-ECAA3491B646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53519445-D835-4298-BC3C-ECAA3491B646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53519445-D835-4298-BC3C-ECAA3491B646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53519445-D835-4298-BC3C-ECAA3491B646}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

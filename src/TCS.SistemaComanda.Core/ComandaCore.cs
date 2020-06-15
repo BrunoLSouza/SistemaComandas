@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TCS.SistemaComanda.Core.DTOs;
 using TCS.SistemaComanda.Dados.Repositorio;
 using TCS.SistemaComanda.Dominio;
@@ -144,13 +145,13 @@ namespace TCS.SistemaComanda.Core
             }
         }
 
-        public void FecharComanda(int idComanda)
+        public NotaFiscalDTO FecharComanda(int idComanda)
         {
             if (idComanda > 0 && VerificaComandaAberta(idComanda))
             {
                 Comanda comanda = _comandaData.ObterPorId(idComanda);
 
-                if (comanda.Itens.Count() > 1)
+                if (comanda.Itens.Count() > 0)
                 {
                     //Obtem uma lista com todos os produtos
                     List<Produto> produtos = new List<Produto>();
@@ -168,9 +169,18 @@ namespace TCS.SistemaComanda.Core
                         ResetarComanda(idComanda);
                     }
 
+                    var jsonDTO = JsonConvert.SerializeObject(notafiscal);
+                    NotaFiscalDTO notaFiscalDTO = JsonConvert.DeserializeObject<NotaFiscalDTO>(jsonDTO);
+
+                    return notaFiscalDTO;
+
                 }
 
+                return null;
             }
+
+            return null;
+
         }
 
         public NotaFiscal GeraNotaFiscal(List<Produto> produtos) 
@@ -199,8 +209,10 @@ namespace TCS.SistemaComanda.Core
                 List<AnotacaoNotaFiscal> anotacoesNotaFiscal = new List<AnotacaoNotaFiscal>();
 
                 //promoções
-                DescontoCerveja(itensNotaFiscal);
                 AguaGratis(itensNotaFiscal, anotacoesNotaFiscal);
+                DescontoCerveja(itensNotaFiscal);
+
+                RemoveItemSemQuantidade(itensNotaFiscal);
 
                 notaFiscal.IdNotaFiscal = Guid.NewGuid();
                 notaFiscal.Itens = itensNotaFiscal;
@@ -220,8 +232,20 @@ namespace TCS.SistemaComanda.Core
         {
             if (itensNF != null && itensNF.Count() > 0)
             {
-                int qtdCerveja = itensNF.Where(i => i.Produto.ToLower() == "cerveja").FirstOrDefault().Quantidade;
-                int qtdSuco = itensNF.Where(i => i.Produto.ToLower() == "suco").FirstOrDefault().Quantidade;
+                ItemNotaFiscal cerveja = itensNF.Where(i => i.Produto.ToLower() == "cerveja").FirstOrDefault();
+                int qtdCerveja = 0;
+                if (cerveja != null)
+                {
+                    qtdCerveja = cerveja.Quantidade;
+                };
+                
+
+                ItemNotaFiscal suco = itensNF.Where(i => i.Produto.ToLower() == "suco").FirstOrDefault();
+                int qtdSuco = 0;
+                if (suco != null)
+                {
+                    qtdSuco = suco.Quantidade;
+                };
 
                 int qtdCervejaComDesconto = (qtdCerveja - qtdSuco <= 0) ? qtdCerveja : qtdSuco;
 
@@ -254,8 +278,23 @@ namespace TCS.SistemaComanda.Core
         {
             var qtdAguaDeGraca = 0;
 
-            int qtdCerveja = itensNF.Where(i => i.Produto.ToLower() == "cerveja").FirstOrDefault().Quantidade;
-            int qtdConhaque = itensNF.Where(i => i.Produto.ToLower() == "conhaque").FirstOrDefault().Quantidade;
+            ItemNotaFiscal cerveja = itensNF.Where(i => i.Produto.ToLower() == "cerveja").FirstOrDefault();
+            int qtdCerveja = 0;
+            if (cerveja != null)
+            {
+                qtdCerveja = cerveja.Quantidade;
+            };
+
+
+            ItemNotaFiscal conhaque = itensNF.Where(i => i.Produto.ToLower() == "conhaque").FirstOrDefault();
+            int qtdConhaque = 0;
+            if (conhaque != null)
+            {
+                qtdConhaque = conhaque.Quantidade;
+            };
+
+            //int qtdCerveja = itensNF.Where(i => i.Produto.ToLower() == "cerveja").FirstOrDefault().Quantidade;
+            //int qtdConhaque = itensNF.Where(i => i.Produto.ToLower() == "conhaque").FirstOrDefault().Quantidade;
 
             var qtdConhaquePromo = qtdConhaque / 3;
             var qtdCervejaPromo = qtdCerveja / 2;
@@ -281,6 +320,17 @@ namespace TCS.SistemaComanda.Core
                     if (itemNF.Produto.ToLower() == "água") 
                     {
                         temAgua = true;
+
+                        int qtdAddlAgua = 0;
+                        if (itemNF.Quantidade >= qtdAguaDeGraca)
+                        {
+                            qtdAddlAgua = qtdAguaDeGraca;
+                        }
+                        else
+                        {
+                            qtdAddlAgua = itemNF.Quantidade;
+                        }
+
                         itemNF.Quantidade -= qtdAguaDeGraca;
 
                         if (itemNF.Quantidade < 0)
@@ -294,6 +344,19 @@ namespace TCS.SistemaComanda.Core
 
                             itemNF.Quantidade = 0;
 
+                        }
+
+                        if (qtdAddlAgua > 0)
+                        {
+                            ItemNotaFiscal novoItem = new ItemNotaFiscal()
+                            {
+                                IdItemNotaFiscal = Guid.NewGuid(),
+                                Produto = "Água (Promoção)",
+                                Valor = 0.00,
+                                Quantidade = qtdAddlAgua
+                            };
+
+                            itensNF.Add(novoItem);
                         }
 
                         break;
@@ -323,6 +386,23 @@ namespace TCS.SistemaComanda.Core
 
             return comandasDTO;
 
+        }
+
+        public void RemoveItemSemQuantidade(List<ItemNotaFiscal> itensNF)
+        {
+            if (itensNF != null && itensNF.Count() > 0)
+            {
+                List<ItemNotaFiscal> removeItens = itensNF.Where(i => i.Quantidade == 0).ToList();
+
+                if (removeItens.Count > 0)
+                {
+                    foreach (var item in removeItens)
+                    {
+                        itensNF.Remove(item);
+                    }
+                }
+
+            }
         }
 
     }

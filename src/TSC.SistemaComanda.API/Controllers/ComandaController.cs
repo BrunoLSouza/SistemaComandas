@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
+using System.Web.UI.WebControls;
 using TCS.SistemaComanda.Core;
 using TCS.SistemaComanda.Core.DTOs;
 
@@ -15,12 +17,12 @@ namespace TSC.SistemaComanda.API.Controllers
     {
         [HttpPost]
         [Route("Adicionar")]
-        public HttpResponseMessage AdicionarItem(int idComanda, [FromBody] List<int> idProdutos)
+        public HttpResponseMessage AdicionarItem([FromBody] InserirProdutoDTO inserirProdutoDTO)
         {
             try
             {
                 ComandaCore comandaCore = new ComandaCore();
-                var retorno = comandaCore.InserirItens(idComanda, idProdutos);
+                var retorno = comandaCore.InserirItens(inserirProdutoDTO.IdComanda, inserirProdutoDTO.IdProdutos);
 
                 if (retorno == true)
                 {
@@ -36,20 +38,30 @@ namespace TSC.SistemaComanda.API.Controllers
             return Request.CreateResponse(HttpStatusCode.BadRequest, "Ocorreu um erro ao adicionar o produto na comanda");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Fechar")]
-        public HttpResponseMessage Fechar(int idComanda)
+        [ResponseType(typeof(List<NotaFiscalDTO>))]
+        public IHttpActionResult Fechar(int idComanda)
         {
             try
             {
                 ComandaCore comandaCore = new ComandaCore();
-                comandaCore.FecharComanda(idComanda);
+                NotaFiscalDTO notaFiscalDTO = comandaCore.FecharComanda(idComanda);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Comanda Fechada");
+                if(notaFiscalDTO != null)
+                {
+                    return Ok(notaFiscalDTO);
+                }
+                else
+                {
+                    return Content(HttpStatusCode.NoContent,notaFiscalDTO);
+                }
+
+                
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ocorreu um erro no servidor");
+                return InternalServerError();
             }
 
         }
@@ -89,20 +101,41 @@ namespace TSC.SistemaComanda.API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("ObterTodas")]
-        public HttpResponseMessage ObterTodas()
+        [ResponseType(typeof(List<ComandaDTO>))]
+        public IHttpActionResult ObterTodas()
         {
             try
             {
                 ComandaCore comandaCore = new ComandaCore();
-                List<ComandaDTO> comandaDto = comandaCore.ObterTodasComandas();
+                List<ComandaDTO> comandasDto = comandaCore.ObterTodasComandas();
 
-                return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(comandaDto));
+                return Ok(comandasDto);
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ocorreu um erro no servidor");
+                //return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ocorreu um erro no servidor");
+                return InternalServerError();
+            }
+        }
+
+        [HttpGet]
+        [Route("ObterTodosProdutos")]
+        [ResponseType(typeof(List<ProdutoDTO>))]
+        public IHttpActionResult ObterTodosProdutos()
+        {
+            try
+            {
+                ProdutoCore produtoCore = new ProdutoCore();
+                List<ProdutoDTO> produtosDTO = produtoCore.ObterTodos();
+
+                return Ok(produtosDTO);
+            }
+            catch (Exception e)
+            {
+                //return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ocorreu um erro no servidor");
+                return InternalServerError();
             }
         }
 

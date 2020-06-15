@@ -52,7 +52,7 @@
     <Compile Include="Interfaces\Repositorio\INotaFiscalRepositorio.cs" />
     <Compile Include="Interfaces\Repositorio\IProdutoRepositorio.cs" />
     <Compile Include="Interfaces\Repositorio\IRepositorioBase.cs" />
-    <Compile Include="ItemNotaFiscal.cs" />
+    <Compile Include="Entidades\ItemNotaFiscal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

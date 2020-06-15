@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Bar do DG", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div id="containerAlerta"></div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Sistema Comandas</p>
+        </footer>
+    </div>
+
+    <div id="modalConfirmacaoSrc" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-10">
+                        <h3 class="modal-title">Modal title</h3>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 6px;">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>                    
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" href="@Url.Action("rota")" role="button">Sim</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/custom")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

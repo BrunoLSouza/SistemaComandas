@@ -1,0 +1,83 @@
+﻿@model TSC.SistemaComanda.Web.Models.NotaFiscalViewModel
+@{
+    ViewBag.Title = "Nota Fiscal";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>@ViewBag.Title - Comanda: @ViewBag.IdComanda</h2>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-primary pull-right" href="@Url.Action("Index")" role="button" style="margin-top: 20px">Inicio</a>
+    </div>
+</div>
+
+<div class="row">
+    <hr />
+    <h4>Produtos</h4>
+    <div class="col-md-12">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Qtd</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Itens.Count > 0)
+                {
+                    foreach (var item in Model.Itens)
+                    {
+                        <tr>
+                            <td>@item.Produto</td>
+                            <td>@item.Quantidade</td>
+                            <td>R$ @item.Valor</td>
+                            <td>R$ @item.Total</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" align="center"> <b>Essa comanda não possui itens</b> </td>
+                    </tr>
+                }
+
+            </tbody>
+            @if (Model != null && Model.Itens.Count > 0)
+            {
+                <tfoot>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td scope="col"><b>Total Nota Fiscal:</b>R$ @Model.Total</td>
+                    </tr>
+                </tfoot>
+            }            
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <hr />
+    <h4>Anotações</h4>
+    <div class="col-md-12">
+        <div id="divAnotacoes">
+            <ul>
+                @if (Model != null && Model.Anotacoes.Count > 0)
+                {
+                    foreach (var note in Model.Anotacoes)
+                    {
+                        <li>@note.Descricao</li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+

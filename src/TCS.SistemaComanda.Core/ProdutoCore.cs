@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TCS.SistemaComanda.Dados.Repositorio;
 using TCS.SistemaComanda.Dominio;
 
@@ -45,6 +47,16 @@ namespace TCS.SistemaComanda.Core
 
         }
 
+        public List<ProdutoDTO> ObterTodos()
+        {
+            List<Produto> produtos = _data.ObterTodos().ToList();
+
+            var json = JsonConvert.SerializeObject(produtos);
+            List<ProdutoDTO> produtosDTO = JsonConvert.DeserializeObject<List<ProdutoDTO>>(json);
+
+            return produtosDTO;
+
+        }
     }
 }
 

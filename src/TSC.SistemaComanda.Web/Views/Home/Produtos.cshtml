@@ -1,0 +1,48 @@
+﻿@model List<TSC.SistemaComanda.Web.Models.ProdutoViewModel>
+@{
+    ViewBag.Title = "Adiciona Produtos";
+}
+<div class="row">
+    <div class="col-md-6">
+        <h2>@ViewBag.Title - Comanda: @ViewBag.IdComanda</h2>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-primary pull-right" href="@Url.Action("Index")" role="button" style="margin-top: 20px">Voltar</a>
+    </div>
+</div>
+
+<div class="row">
+    <hr />
+    <div class="col-md-12">
+
+        @foreach (var produto in Model)
+        {
+            <div class="col-md-3">
+                <div class="card-counter info">
+                    <a href="#" class="fill-div" onclick="AdicionarProduto(@ViewBag.IdComanda,@produto.IdProduto)"></a>
+                    <i class="fa fa-glass ajusteCardIcon"></i>
+                    <span class="count-numbers">@produto.Nome</span>
+                    <span class="count-name"></span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Ações</h2>
+        <hr />
+    </div>
+    
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <div class="card-counter danger">
+                <a href="#" class="fill-div" onclick="ConfirmarFechamentoComanda(@ViewBag.IdComanda);"></a>
+                <i class="fa fa-money ajusteCardIcon"></i>
+                <span class="count-numbers">Fechar</span>
+                <span class="count-name">Comanda</span>
+            </div>
+        </div>
+    </div>
+</div>
