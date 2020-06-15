@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TCS.SistemaComanda.Core
+namespace TCS.SistemaComanda.Core.DTOs
 {
     public class ProdutoDTO
     {

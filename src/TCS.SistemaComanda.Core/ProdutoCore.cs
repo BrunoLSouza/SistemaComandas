@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TCS.SistemaComanda.Core.DTOs;
 using TCS.SistemaComanda.Dados.Repositorio;
 using TCS.SistemaComanda.Dominio;
 
