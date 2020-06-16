@@ -6,17 +6,22 @@
 <h2>@ViewBag.Title</h2>
 
 <div class="row">
-
-    @foreach (var comanda in Model)
+    @if (Model != null)
     {
-        <div class="col-md-3"   >
-            <div class="card-counter @((comanda.Aberta) ? "danger" : "success")">
-                <a href="@Url.Action("Produtos",new {idComanda = comanda.IdComanda })" class="fill-div"></a>
-                <i class="fa fa-ticket ajusteCardIcon"></i>
-                <span class="count-numbers">@comanda.IdComanda</span>
-                <span class="count-name">Comanda</span>
+        foreach (var comanda in Model)
+        {
+            <div class="col-md-3">
+                <div class="card-counter @((comanda.Aberta) ? "danger" : "success")">
+                    <a href="@Url.Action("Produtos",new {idComanda = comanda.IdComanda })" class="fill-div"></a>
+                    <i class="fa fa-ticket ajusteCardIcon"></i>
+                    <span class="count-numbers">@comanda.IdComanda</span>
+                    <span class="count-name">Comanda</span>
+                </div>
             </div>
-        </div>
+        }
+
     }
-        
+
+
+
 </div>
