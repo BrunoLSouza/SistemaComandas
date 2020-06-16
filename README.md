@@ -2,6 +2,7 @@
 > Sistema criado para o teste TestDgBar
 
 **Decisões**
+
 Para o desenvolvimento de projeto foi utilizado:
 - .Net Framework 4.7
 - Entity Framework 
@@ -15,6 +16,7 @@ Assim as escolha por essas tecnologias citadas acima foi feita devido uma maior 
 Principalmente na autenticação por token no qual optei por utilizar o Owin e nos teste no qual foi utilizado o projeto padrao do visual studio
 
 **Melhorias**
+
 Como futuras melhorias para esse sistema destaco:
 - cadastro de usuario com perfil
 - adicionar na api metodos para listar itens de uma comanda
