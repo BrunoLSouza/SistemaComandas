@@ -75,12 +75,12 @@ namespace TSC.SistemaComanda.API.Controllers
 
         [HttpPost]
         [Route("Adicionar")]
-        public bool AdicionarItem([FromBody] InserirProdutoDTO inserirProdutoDTO)
+        public MensagemDTO AdicionarItem([FromBody] InserirProdutoDTO inserirProdutoDTO)
         {
             try
             {
                 ComandaCore comandaCore = new ComandaCore();
-                var retorno = comandaCore.InserirItens(inserirProdutoDTO.IdComanda, inserirProdutoDTO.IdProdutos);
+                MensagemDTO retorno = comandaCore.InserirItens(inserirProdutoDTO.IdComanda, inserirProdutoDTO.IdProdutos);
 
                 
                 return retorno;
@@ -88,7 +88,12 @@ namespace TSC.SistemaComanda.API.Controllers
             }
             catch (Exception e)
             {
-                return false;
+                MensagemDTO mensagemDTO = new MensagemDTO();
+                mensagemDTO.Mensagem = e.Message;
+                mensagemDTO.Sucesso = false;
+                mensagemDTO.Tipo = "Erro";
+
+                return mensagemDTO;
             }
 
         }

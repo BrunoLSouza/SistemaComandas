@@ -12,7 +12,7 @@ using TSC.SistemaComanda.Web.DTO;
 
 namespace TSC.SistemaComanda.Web.Services.Comanda
 {
-    public class ComandaService
+    public class ComandaService : IComandaService
     {
         HttpClient client = new HttpClient();
               
@@ -31,7 +31,7 @@ namespace TSC.SistemaComanda.Web.Services.Comanda
                 HttpResponseMessage response = await client.PostAsync(url, content);
 
                 var jsonContent = await response.Content.ReadAsStringAsync();
-                Token tokenApp = JsonConvert.DeserializeObject<Token>(jsonContent);
+                TokenApp tokenApp = JsonConvert.DeserializeObject<TokenApp>(jsonContent);
 
                 return tokenApp.AccessToken;
             }
@@ -78,9 +78,10 @@ namespace TSC.SistemaComanda.Web.Services.Comanda
 
         public async Task<MensagemDTO> AdicionarProdutoAsync(InserirProdutoDTO inserirProduto, string token)
         {
+            MensagemDTO mensagemDTO = new MensagemDTO();
+
             try
             {
-                MensagemDTO mensagemDTO = new MensagemDTO();
 
                 string url = "https://localhost:44399/api/Comanda/Adicionar";
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
@@ -89,6 +90,10 @@ namespace TSC.SistemaComanda.Web.Services.Comanda
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(url, content);
 
+
+                var mensagemJson = await response.Content.ReadAsStringAsync();
+                mensagemDTO = JsonConvert.DeserializeObject<MensagemDTO>(mensagemJson);
+
                 if (!response.IsSuccessStatusCode)
                 {
                     mensagemDTO.Mensagem = "Erro ao adicionar produto na comanda";
@@ -96,8 +101,16 @@ namespace TSC.SistemaComanda.Web.Services.Comanda
                 }
                 else
                 {
-                    mensagemDTO.Mensagem = "Produto adicionado com sucesso";
-                    mensagemDTO.Tipo = "Sucesso";
+                    if (mensagemDTO.Sucesso == true)
+                    {
+                        mensagemDTO.Mensagem = "Produto adicionado com sucesso";
+                        mensagemDTO.Tipo = "Sucesso";
+                    }
+                    else
+                    {                        
+                        mensagemDTO.Tipo = "Atencao";
+                    }
+                    
                 }
 
                 return mensagemDTO;
@@ -105,7 +118,9 @@ namespace TSC.SistemaComanda.Web.Services.Comanda
             }
             catch (Exception ex)
             {
-                throw new Exception("Ocorreu um erro inesperado.");
+                mensagemDTO.Mensagem = "Erro Inesperado";
+                mensagemDTO.Tipo = "Erro";
+                return mensagemDTO;
             }
 
         }
@@ -126,25 +141,27 @@ namespace TSC.SistemaComanda.Web.Services.Comanda
             }
             catch (Exception ex)
             {
-                throw new Exception("Ocorreu um erro inesperado.");
+                NotaFiscalDTO notafiscalDto = new NotaFiscalDTO();
+                return notafiscalDto;
             }
         }
-    }
 
 
-    internal class Token
-    {
-        [JsonProperty("access_token")]
-        public string AccessToken { get; set; }
+        internal class TokenApp
+        {
+            [JsonProperty("access_token")]
+            public string AccessToken { get; set; }
 
-        [JsonProperty("token_type")]
-        public string TokenType { get; set; }
+            [JsonProperty("token_type")]
+            public string TokenType { get; set; }
 
-        [JsonProperty("expires_in")]
-        public int ExpiresIn { get; set; }
+            [JsonProperty("expires_in")]
+            public int ExpiresIn { get; set; }
 
-        [JsonProperty("refresh_token")]
-        public string RefreshToken { get; set; }
+            [JsonProperty("refresh_token")]
+            public string RefreshToken { get; set; }
+        }
+
     }
 
 }

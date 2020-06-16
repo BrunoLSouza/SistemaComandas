@@ -50,6 +50,7 @@
     <Compile Include="DTOs\InserirProdutoDTO.cs" />
     <Compile Include="DTOs\ItemComandaDTO.cs" />
     <Compile Include="DTOs\ItemNotaFiscalDTO.cs" />
+    <Compile Include="DTOs\MensagemDTO.cs" />
     <Compile Include="DTOs\NotaFiscalDTO.cs" />
     <Compile Include="DTOs\ProdutoDTO.cs" />
     <Compile Include="ProdutoCore.cs" />

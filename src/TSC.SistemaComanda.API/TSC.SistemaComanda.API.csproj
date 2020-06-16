@@ -174,8 +174,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BaseUsuarios.cs" />
     <Compile Include="Controllers\ComandaController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProviderTokensAcesso.cs" />
     <Compile Include="Startup.cs" />

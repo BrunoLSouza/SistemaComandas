@@ -13,7 +13,7 @@ namespace TSC.SistemaComanda.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ComandaService _comandaService;
+        private readonly IComandaService _comandaService;
 
         public HomeController()
         {

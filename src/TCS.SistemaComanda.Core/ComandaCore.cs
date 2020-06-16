@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TCS.SistemaComanda.Core.DTOs;
@@ -40,17 +41,22 @@ namespace TCS.SistemaComanda.Core
             return comandaAberta;
         }
 
-        public bool InserirItens(int idComanda, List<int> idProdutos)
+        public MensagemDTO InserirItens(int idComanda, List<int> idProdutos)
         {
-            //if (VerificaComandaAberta(idComanda) == true)
-            //{
+            MensagemDTO mensagemDTO = new MensagemDTO();
+
+            try
+            {
                 Comanda comanda = _comandaData.ObterPorId(idComanda);
 
                 ProdutoCore produtoCore = new ProdutoCore();
                 List<Produto> produtos = produtoCore.ObterListaProduto(idProdutos);
 
-                if (produtos != null && produtos.Count() > 0)
+                if (comanda != null && produtos != null && produtos.Count() > 0 && 
+                    ValidaQuantidadeSuco(comanda.Itens) < 3)
                 {
+
+                    //comanda.Itens
 
                     foreach (var produto in produtos)
                     {
@@ -61,19 +67,43 @@ namespace TCS.SistemaComanda.Core
                             IdProduto = produto.IdProduto
                         };
 
-                       _itemComandaData.Salvar(itemComanda);
+                        _itemComandaData.Salvar(itemComanda);
 
                     }
 
-                comanda.Aberta = true;
-                _comandaData.Alterar(comanda);
+                    comanda.Aberta = true;
+                    _comandaData.Alterar(comanda);
 
-                return true;
+                    mensagemDTO.Mensagem = "Produto Adicionado com Sucesso";
+                    mensagemDTO.Sucesso = true;
+                    mensagemDTO.Tipo = "Sucesso";
+
+
                 }
-                
-            //}
+                else
+                {
+                    mensagemDTO.Mensagem = "Essa comanda atingiu o limite suco";
+                    mensagemDTO.Sucesso = false;
+                    mensagemDTO.Tipo = "Alerta";
+                }
 
-            return false;
+                return mensagemDTO;
+
+            }
+            catch (Exception ex)
+            {
+                mensagemDTO.Mensagem = ex.Message;
+                mensagemDTO.Sucesso = false;
+                mensagemDTO.Tipo = "Erro";
+
+                return mensagemDTO;
+            }
+
+            mensagemDTO.Mensagem = "Erro ao inserir produto";
+            mensagemDTO.Sucesso = false;
+            mensagemDTO.Tipo = "Erro";
+
+            return mensagemDTO;
 
         }
 
@@ -403,6 +433,20 @@ namespace TCS.SistemaComanda.Core
                 }
 
             }
+        }
+
+        public int ValidaQuantidadeSuco(List<ItemComanda> itens) 
+        {
+            List<ItemComanda> sucos = new List<ItemComanda>();
+            
+            sucos = itens.Where(i => i.Produto.Nome.ToLower() == "suco").ToList();
+
+            if (sucos.Count() > 0) 
+            {
+                return sucos.Count();
+            }
+
+            return 0;
         }
 
     }

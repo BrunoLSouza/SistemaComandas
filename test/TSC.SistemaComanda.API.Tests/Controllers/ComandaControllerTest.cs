@@ -79,7 +79,8 @@ namespace TSC.SistemaComanda.API.Tests.Controllers
                 IdProdutos = listaIdProdutos
             };
 
-            bool result = controller.AdicionarItem(inserirProduto);
+            bool result = false;
+            //bool result = controller.AdicionarItem(inserirProduto);
 
             if (result == true)
             {
