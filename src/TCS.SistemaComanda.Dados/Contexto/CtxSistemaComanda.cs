@@ -12,7 +12,7 @@ namespace TCS.SistemaComanda.Dados.Contexto
     public class CtxSistemaComanda : DbContext
     {
         public CtxSistemaComanda()
-            : base("SistemaComanda")
+            : base("name=Conn")
         {
         }
 
