@@ -79,15 +79,46 @@ namespace TSC.SistemaComanda.API.Tests.Controllers
                 IdProdutos = listaIdProdutos
             };
 
-            bool result = false;
-            //bool result = controller.AdicionarItem(inserirProduto);
+            //bool result = false;
+            MensagemDTO result = controller.AdicionarItem(inserirProduto);
 
-            if (result == true)
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Sucesso);
+
+            controller.Fechar(10);
+
+        }
+
+        [TestMethod]
+        public void ValidaLimiteSuco()
+        {
+            ComandaController controller = new ComandaController();
+
+            List<int> listaIdProdutos = new List<int>();
+            listaIdProdutos.Add(3);
+            listaIdProdutos.Add(3);
+            listaIdProdutos.Add(3);
+
+            InserirProdutoDTO inserirProduto = new InserirProdutoDTO()
             {
-                controller.Fechar(10);
-            }
+                IdComanda = 10,
+                IdProdutos = listaIdProdutos
+            };
 
-            Assert.IsTrue(result);
+            controller.AdicionarItem(inserirProduto);
+
+            List<int> novaLista = new List<int>();
+            novaLista.Add(3);
+
+            //bool result = false;
+            MensagemDTO result = controller.AdicionarItem(inserirProduto);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(!result.Sucesso);
+            Assert.AreEqual("alerta", result.Tipo.ToLower());
+            Assert.AreEqual("essa comanda atingiu o limite suco", result.Mensagem.ToLower());
+
+            controller.Fechar(10);
         }
 
     }
