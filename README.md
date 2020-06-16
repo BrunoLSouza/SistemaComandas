@@ -24,3 +24,8 @@ Como futuras melhorias para esse sistema destaco:
 - deixar acesso ao metodo de fechar comanda apenas para o caixa
 - adicionar metodo para resetar uma comanda
 
+**Execução**
+
+Antes de executar o programa pela primeira vez execute no Package Manager Console o comando Update-Database, com o projeto TCS.SistemaComanda.Dados selecionado como Default Project.
+Assim será criado o banco de dados e executado a carga inicial do sistema via seed
+
