@@ -12,6 +12,7 @@ using TCS.SistemaComanda.Core.DTOs;
 
 namespace TSC.SistemaComanda.API.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/Comanda")]
     public class ComandaController : ApiController
     {   

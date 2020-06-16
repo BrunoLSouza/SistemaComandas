@@ -22,8 +22,8 @@ namespace TSC.SistemaComanda.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
-            
-            List<ComandaDTO> comandasDTO = await _comandaService.ObterComandasAsync();
+            string token = await _comandaService.Token();
+            List<ComandaDTO> comandasDTO = await _comandaService.ObterComandasAsync(token);
             
             var jsonDTO = JsonConvert.SerializeObject(comandasDTO);
             List<ComandaViewModel> comandasVM = JsonConvert.DeserializeObject<List<ComandaViewModel>>(jsonDTO);
@@ -34,7 +34,8 @@ namespace TSC.SistemaComanda.Web.Controllers
 
         public async Task<ActionResult> Produtos(int idComanda)
         {
-            List<ProdutoDTO> produtosDTO = await _comandaService.ObterProdutosAsync();
+            string token = await _comandaService.Token();
+            List<ProdutoDTO> produtosDTO = await _comandaService.ObterProdutosAsync(token);
 
             var jsonDTO = JsonConvert.SerializeObject(produtosDTO);
             List<ProdutoViewModel> produtosVM = JsonConvert.DeserializeObject<List<ProdutoViewModel>>(jsonDTO);
@@ -57,7 +58,8 @@ namespace TSC.SistemaComanda.Web.Controllers
                     IdProdutos = idProdutos
                 };
 
-                MensagemDTO mensagemDTO =  await _comandaService.AdicionarProdutoAsync(inserirProdutoDTO);
+                string token = await _comandaService.Token();
+                MensagemDTO mensagemDTO =  await _comandaService.AdicionarProdutoAsync(inserirProdutoDTO, token);
                 return Json(mensagemDTO, JsonRequestBehavior.AllowGet);
 
             }
@@ -75,7 +77,8 @@ namespace TSC.SistemaComanda.Web.Controllers
 
         public async Task<ActionResult> FecharComanda(int idComanda)
         {
-            NotaFiscalDTO notaFiscalDTO = await _comandaService.FecharComandaAsync(idComanda);
+            string token = await _comandaService.Token();
+            NotaFiscalDTO notaFiscalDTO = await _comandaService.FecharComandaAsync(idComanda, token);
 
             var jsonDTO = JsonConvert.SerializeObject(notaFiscalDTO);
             NotaFiscalViewModel notaFiscalVM = JsonConvert.DeserializeObject<NotaFiscalViewModel>(jsonDTO);
